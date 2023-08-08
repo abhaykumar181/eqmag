@@ -34,7 +34,7 @@
     display:grid;
     justify-content:center;
     align-content:center;
-    grid-template-columns: auto auto auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto auto;
     padding:10px;
     background-color:grey;
    
@@ -114,7 +114,6 @@ echo "
     <div class='h_content' >Category ID</div>
     <div class='h_content' >Newsletter ID</div>
     <div class='h_content' >Title</div>
-    <div class='h_content' >Preheader</div>
     <div class='h_content' >Image URL</div>
     <div class='h_content' >Post URL</div>
     <div class='h_content' >Actions</div>
@@ -129,7 +128,6 @@ if($result->num_rows > 0){
         $cid = $row['cid'];
         $nid = $row['nid'];
         $title = $row['title'];
-        $preheader = $row['preheader'];
         $imageurl = $row['imgurl'];
         $description = $row['description'];
         $posturl = $row['posturl'];
@@ -139,12 +137,11 @@ if($result->num_rows > 0){
             <div>$cid</div>
             <div>$nid</div>
             <div>$title</div>
-            <div>$preheader</div>
             <div>$imageurl</div>
             <div>$posturl</div>
             <div style='display:grid;grid-template-columns:auto auto;grid-gap:15px;'>
                 <a href='editPost.php?pid=$postid' style='text-decoration:none;max-height:10px;' ><span style='border:none;background-color:white;color:black;padding:3px;' >Edit</span></a>
-                <a id='confirmation' style='text-decoration:none;max-height:10px;' ><span style='border:none;background-color:red;color:white;padding:3px;' >
+                <a id='confirmation' style='text-decoration:none;max-height:10px;'><span style='border:none;background-color:red;color:white;padding:3px;' >
                   <button style='background-color:transparent;border:none;color:white' onclick='deletePost($postid)'>Delete</button>
                 </span></a>
             </div>

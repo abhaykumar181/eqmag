@@ -83,7 +83,6 @@ input , textarea{
     if($result->num_rows > 0){
         while($row = $result->fetch_assoc()){
             $title = $row['title'];
-            $preheader = $row['preheader'];
             $imgurl = $row['imgurl'];
             $description = $row['description'];
             $posturl = $row['posturl'];
@@ -98,19 +97,16 @@ input , textarea{
         <div></div>
 
         <div>Title</div>
-        <div><textarea style='min-height:70px;min-width:400px' name="newtitle" required> <?php echo $title ?>  </textarea></div>
-       
-        <div>Preheader</div>
-        <div><textarea style='min-height:70px;min-width:400px' name="newpreheader" required> <?php echo $preheader ?>  </textarea></div>
+        <div><textarea style='min-height:70px;min-width:400px;min-height:120px' name="newtitle" required> <?php echo $title ?>  </textarea></div>
 
         <div>Image URL</div>
-        <div><textarea style='min-height:70px;min-width:400px' name="newimgurl" required> <?php echo $imgurl ?> </textarea></div>
+        <div><textarea style='min-height:70px;min-width:400px;min-height:120px' name="newimgurl" required> <?php echo $imgurl ?> </textarea></div>
 
         <div>Description</div>
-        <div><textarea class="t_area" name="newdescription" required> <?php echo $description ?> </textarea></div>
+        <div><textarea class="t_area" name="newdescription" style="min-height:120px" required> <?php echo $description ?> </textarea></div>
 
         <div>Post URL</div>
-        <div><textarea style='min-height:70px;min-width:400px' name="newposturl" required> <?php echo $posturl ?> </textarea></div>
+        <div><textarea style='min-height:70px;min-width:400px;min-height:120px' name="newposturl" required> <?php echo $posturl ?> </textarea></div>
 
         <div>Edit Data</div>
         <div><input type="submit" name="submit" /></div>
@@ -126,12 +122,11 @@ input , textarea{
 
 if(isset($_POST['submit'])){
     $editedTitle = $_POST['newtitle'];
-    $editedPreheader = $_POST['newpreheader'];
     $editedImageURL = $_POST['newimgurl'];
     $editedDescription = $_POST['newdescription'];
     $editedPostURL = $_POST['newposturl'];
 
-    $update = "UPDATE `postsdata` SET `title`='$editedTitle', `preheader`='$editedPreheader',
+    $update = "UPDATE `postsdata` SET `title`='$editedTitle',
     `imgurl`='$editedImageURL',`description`='$editedDescription',
     `posturl`='$editedPostURL' WHERE `postid`='{$_GET['pid']}' ";
     $runquery = $conn->query($update);
