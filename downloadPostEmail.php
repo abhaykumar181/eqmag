@@ -3,7 +3,7 @@ include("connection.php");
 $getDatesQuery = "SELECT `date` FROM `newsletterdates` WHERE nid='{$_GET['nid']}'";
 $datesResult = $conn->query($getDatesQuery);
 
-$getall = "SELECT  `preheader` FROM `postsdata` WHERE nid='{$_GET['nid']}'";
+$getall = "SELECT  `preheader` FROM `newsletterdates` WHERE nid='{$_GET['nid']}'";
 $result = $conn->query($getall);
 
 $nidValue = $_GET['nid'];
@@ -21,11 +21,8 @@ while ($row = $datesResult->fetch_assoc()) {
 }
 
 
+
 ?>
-
-<?php ob_start(); ?>
-
-
 
 <?php ob_start(); ?>
 
@@ -37,7 +34,7 @@ while ($row = $datesResult->fetch_assoc()) {
         
     }
 }
-echo $preheader; ?></div>
+?></div>
 <!--Including the trackingImage tag will allow your open rates to be tracked for this campaign-->
 [[trackingImage]]
 
@@ -62,8 +59,8 @@ echo $preheader; ?></div>
         
         }
 	    ?>
-		<p><a href="https://equicapmag.com/newsletter-<?php echo $formattedDate ?>/?<?php  echo $qs ?>" target="_blank" data-segment-action="add" data-segment-id="6f03487a-42e0-11ec-9cb2-fa163e57b7cb" style="color: #000000; font-style: italic; font-weight: normal; font-family: calibri; text-decoration: none;">View Online</a> |
-			<a href="https://equicapmag.com/subscribe/?<?php  echo $qs ?>" target="_blank" data-segment-action="add" data-segment-id="6f03487a-42e0-11ec-9cb2-fa163e57b7cb" style="color: #000000; font-style: italic; font-weight: normal; font-family: calibri; text-decoration: none;">Sign Up</a></p>
+		<p><a href="https://equicapmag.com/newsletter-<?php echo $formattedDate ?>?<?php  echo $qs ?>" target="_blank" data-segment-action="add" data-segment-id="6f03487a-42e0-11ec-9cb2-fa163e57b7cb" style="color: #000000; font-style: italic; font-weight: normal; font-family: calibri; text-decoration: none;">View Online</a> |
+			<a href="https://equicapmag.com/subscribe?<?php  echo $qs ?>" target="_blank" data-segment-action="add" data-segment-id="6f03487a-42e0-11ec-9cb2-fa163e57b7cb" style="color: #000000; font-style: italic; font-weight: normal; font-family: calibri; text-decoration: none;">Sign Up</a></p>
        </td>
       <td style="float: right;padding-top:25px;padding-bottom: 14px;" align="center">
 		<p style="line-height:22px;margin-top:0;margin-bottom:15px;margin-bottom: 18px;">
@@ -83,6 +80,8 @@ echo $preheader; ?></div>
 
 <?php
 
+
+
   
 if($result->num_rows > 0){
   $i=1;
@@ -91,7 +90,7 @@ if($result->num_rows > 0){
   unset($_GET['nid']);
   $GLOBALS['qs'] = http_build_query($_GET);
 
-  $getall = "SELECT `postid`, `cid`, `nid`, `title`, `preheader`, `imgurl`, `description`, `posturl` FROM `postsdata` WHERE nid='$nidValue'";
+  $getall = "SELECT `postid`, `cid`, `nid`, `title`, `imgurl`, `description`, `posturl` FROM `postsdata` WHERE nid='$nidValue'";
 $result = $conn->query($getall);
 
     while($row = $result->fetch_assoc()){
@@ -102,7 +101,8 @@ $result = $conn->query($getall);
         $title = $row['title'];
         $imageurl = $row['imgurl'];
         $description = $row['description'];
-        $posturl = $row['posturl'].$qs;
+        $prl = $row['posturl'].'?'.$qs;
+        $posturl = preg_replace('/\/\?/', '?', $prl);
         
 
         $getCategory = "SELECT `catName`,`catUrl` FROM `categories` WHERE cid='$cid'";
@@ -111,11 +111,19 @@ $result = $conn->query($getall);
         
         
         if($catresult->num_rows > 0){
-            while($catrow = $catresult->fetch_assoc()){
-                $catName = $catrow['catName'];
-                $catUrl = $catrow['catUrl'].$qs;
-            }
-        }
+          while($catrow = $catresult->fetch_assoc()){
+              $catName = $catrow['catName'];
+              $catUrl = $catrow['catUrl'] .'?'. $qs;
+      
+              // Remove the leading slash before the question mark
+              $catUrl = preg_replace('/\/\?/', '?', $catUrl);
+      
+              // Rest of your code that uses $catName and $catUrl
+          }
+      }
+      
+      
+      
         
         echo "
        
@@ -205,12 +213,8 @@ else{
 <!-- main div ends here -->
 
 <p style="margin-top:20px;text-align:center;font-size:15px;font-family:calibri;">Copyright � 2023 EQ Media LLC. All rights reserved.</p>
- </body>
+</body>
 </html>
-
-
-</div>
-</div>
 
 
 

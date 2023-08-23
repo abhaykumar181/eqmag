@@ -73,13 +73,13 @@ $catName = "";
 
 if($catresult->num_rows > 0){
 while($catrow = $catresult->fetch_assoc()){
-    $catName = $catrow['catName'];
-    $catUrl = $catrow['catUrl'].$qs;
+$catName = $catrow['catName'];
+$catUrl = $catrow['catUrl'].$qs;
 
-    $questionMarkPosition = strpos($catUrl, '?');
-    if ($questionMarkPosition !== false && $questionMarkPosition > 0) {
-        $catUrl = substr_replace($catUrl, '', $questionMarkPosition - 1, 1);
-    }
+$questionMarkPosition = strpos($catUrl, '?');
+if ($questionMarkPosition !== false && $questionMarkPosition > 0) {
+$catUrl = substr_replace($catUrl, '', $questionMarkPosition - 1, 1);
+}
 
 }
 }
